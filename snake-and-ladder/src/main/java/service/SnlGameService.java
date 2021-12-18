@@ -33,35 +33,38 @@ public class SnlGameService {
     public void startGame() {
         System.out.println("Game Started");
         while (players.size() >= 2) {
+            StringBuilder str = new StringBuilder();
             Player player = players.poll();
             int diceVal = diceService.rollDice();
-            System.out.println("Dice value for " + player.getName() +  " : " + diceVal);
-            int newPosition = computeNewPosition(player.getPosition(), diceVal);
+            str.append(player.getName()).append(" rolled ").append(diceVal);
+            int newPosition = computeNewPosition(player.getPosition(), diceVal, str);
+            System.out.println(str);
             if (newPosition == boardSize) {
                 int rank = totalPlayerCount - players.size();
                 System.out.println("Player " + player.getName() + " has finished the game at rank " + rank);
             } else {
-                System.out.println("Player " + player.getName() + " has moved from " + player.getPosition()
-                        + " to new position " + newPosition);
                 player.setPosition(newPosition);
                 players.add(player);
             }
         }
     }
 
-    private int computeNewPosition(int startPos, int diceVal) {
-        if (startPos + diceVal > boardSize)
+    private int computeNewPosition(int startPos, int diceVal, StringBuilder str) {
+        if (startPos + diceVal > boardSize) {
+            str.append("\n").append("Invalid roll.");
             return startPos;
+        }
         int currentPosition = startPos + diceVal;
+        str.append(" and moved from ").append(startPos).append(" to ").append(currentPosition).append("\n");
         while (snakeMap.containsKey(currentPosition) || ladderMap.containsKey(currentPosition)) {
             if (snakeMap.containsKey(currentPosition)) {
-                System.out.println("Snake bit at " + currentPosition);
+                str.append("Got bitten by snake at ").append(currentPosition);
                 currentPosition = snakeMap.get(currentPosition).getTail();
-                System.out.println("New position " + currentPosition);
+                str.append(" and moved to ").append(currentPosition).append("\n");
             } else {
-                System.out.println("Ladder at " + currentPosition);
+                str.append("Climbed the ladder at ").append(currentPosition);
                 currentPosition = ladderMap.get(currentPosition).getEnd();
-                System.out.println("New position " + currentPosition);
+                str.append(" and moved to ").append(currentPosition).append("\n");
             }
         }
         return currentPosition;

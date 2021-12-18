@@ -1,8 +1,5 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 public class Snake {
     private int head;
     private int tail;
