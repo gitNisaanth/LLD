@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import kotlin.jvm.Synchronized;
 import model.Room;
 import model.RoomProperty;
 import model.RoomStatus;
@@ -30,8 +29,7 @@ public class RoomBookingService {
 
 
 
-    @Synchronized
-    public boolean bookRoom(String roomId, int startSlot, int endSlot) {
+    synchronized public boolean bookRoom(String roomId, int startSlot, int endSlot) {
         Room room = roomList.stream().filter(it -> it.getId().equals(roomId)).collect(Collectors.toList()).get(0);
         if(!room.isAvailable(startSlot,endSlot)) return false;
         HashMap<Integer, RoomStatus> roomStatus = room.getRoomStatus();

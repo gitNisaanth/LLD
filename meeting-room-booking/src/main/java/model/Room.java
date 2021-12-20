@@ -1,9 +1,6 @@
 package model;
 
-import org.apache.commons.lang3.RandomUtils;
-
 import java.util.HashMap;
-import java.util.Random;
 import java.util.UUID;
 
 public class Room {
@@ -15,7 +12,7 @@ public class Room {
         this.id = UUID.randomUUID().toString();
         this.roomStatus = new HashMap<>();
         for (int i = 1; i <= 100; i++) {
-            roomStatus.put(i,RoomStatus.AVAILABLE);
+            roomStatus.put(i, RoomStatus.AVAILABLE);
         }
         this.roomProperty = roomProperty;
     }
@@ -42,7 +39,7 @@ public class Room {
 
     public boolean isAvailable(int startSlot, int endSlot) {
         for (int i = startSlot; i < endSlot; i++) {
-            if(roomStatus.get(i).equals(RoomStatus.BOOKED)) return false;
+            if (roomStatus.get(i).equals(RoomStatus.BOOKED)) return false;
         }
         return true;
     }

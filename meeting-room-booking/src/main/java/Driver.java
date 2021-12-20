@@ -31,8 +31,8 @@ public class Driver {
         System.out.println("Room");
         List<Room> rooms = employeeService.searchRoom(inputRoomProperty, 10, 20);
         System.out.println(rooms.size());
-        for (int i = 0; i < rooms.size(); i++) {
-            String s = "Room Details: " + rooms.get(i).getId() + " capacity" + rooms.get(i).getRoomProperty().getCapacity();
+        for (Room room : rooms) {
+            String s = "Room Details: " + room.getId() + " capacity" + room.getRoomProperty().getCapacity();
         }
 
         if(rooms.size()!=0) {
